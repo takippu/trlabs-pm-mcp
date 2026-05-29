@@ -1,9 +1,38 @@
 {
   "name": "trlabs-pm-mcp",
   "version": "0.1.0",
+  "description": "MCP server to read TR Labs PM (Northstar) Client Requests from any MCP client via a personal access token.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "trlabs",
+    "northstar",
+    "project-management",
+    "claude",
+    "cursor",
+    "ai-tools"
+  ],
   "type": "module",
+  "license": "MIT",
+  "author": "TRLabs",
+  "homepage": "https://github.com/takippu/trlabs-pm-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takippu/trlabs-pm-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/takippu/trlabs-pm-mcp/issues"
+  },
   "bin": {
     "trlabs-pm-mcp": "dist/server.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
   },
   "scripts": {
     "build": "bun build src/server.ts --target=node --outfile=dist/server.js",
