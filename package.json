@@ -1,0 +1,22 @@
+{
+  "name": "trlabs-pm-mcp",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "trlabs-pm-mcp": "dist/server.js"
+  },
+  "scripts": {
+    "build": "bun build src/server.ts --target=node --outfile=dist/server.js",
+    "prepare": "bun run build",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.6.0"
+  }
+}
