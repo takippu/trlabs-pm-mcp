@@ -5,6 +5,21 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 const inputSchema = {
   projectId: z.string().optional().describe("Project ID to list all CRs for"),
   requestId: z.string().optional().describe("CR request ID to fetch a single CR"),
+  // List-mode filters + pagination (ignored when requestId is supplied).
+  status: z
+    .string()
+    .optional()
+    .describe("List filter: CR status (new|reviewed|converted|closed|rejected)"),
+  phase: z.string().optional().describe("List filter: phase"),
+  categoryId: z.string().optional().describe("List filter: category id"),
+  limit: z
+    .number()
+    .optional()
+    .describe("List pagination: max CRs to return (default 100, max 200)"),
+  offset: z
+    .number()
+    .optional()
+    .describe("List pagination: number of CRs to skip"),
 };
 
 function makeTextContent(data: unknown): { content: [{ type: "text"; text: string }] } {
@@ -54,9 +69,15 @@ export function registerReadCrTool(server: McpServer): void {
           return makeTextContent(data);
         }
         if (projectId) {
-          const data = await pmFetch(
-            `/api/mcp/v1/crs?projectId=${encodeURIComponent(projectId)}`,
-          );
+          // Build the list query: projectId is required; filters/pagination are
+          // appended only when present so existing callers get the old path.
+          const qs = new URLSearchParams({ projectId });
+          if (args.status?.trim()) qs.set("status", args.status.trim());
+          if (args.phase?.trim()) qs.set("phase", args.phase.trim());
+          if (args.categoryId?.trim()) qs.set("categoryId", args.categoryId.trim());
+          if (typeof args.limit === "number") qs.set("limit", String(args.limit));
+          if (typeof args.offset === "number") qs.set("offset", String(args.offset));
+          const data = await pmFetch(`/api/mcp/v1/crs?${qs.toString()}`);
           return makeTextContent(data);
         }
         // Neither id supplied (or both blank after trim).

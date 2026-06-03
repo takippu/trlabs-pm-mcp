@@ -2,6 +2,13 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { registerReadCrTool } from "./tools/read-cr.js";
+import { registerListProjectsTool } from "./tools/list-projects.js";
+import { registerListTasksTool } from "./tools/list-tasks.js";
+import { registerReadTaskTool } from "./tools/read-task.js";
+import { registerListCategoriesTool } from "./tools/list-categories.js";
+import { registerReadCommentsTool } from "./tools/read-comments.js";
+import { registerWhoamiTool } from "./tools/whoami.js";
+import { registerSearchTool } from "./tools/search.js";
 
 // Validate required environment variables at startup
 if (!process.env["PM_TOKEN"]) {
@@ -22,6 +29,13 @@ const server = new McpServer({
 });
 
 registerReadCrTool(server);
+registerListProjectsTool(server);
+registerListTasksTool(server);
+registerReadTaskTool(server);
+registerListCategoriesTool(server);
+registerReadCommentsTool(server);
+registerWhoamiTool(server);
+registerSearchTool(server);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
