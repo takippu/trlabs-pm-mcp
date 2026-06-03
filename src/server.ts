@@ -9,6 +9,10 @@ import { registerListCategoriesTool } from "./tools/list-categories.js";
 import { registerReadCommentsTool } from "./tools/read-comments.js";
 import { registerWhoamiTool } from "./tools/whoami.js";
 import { registerSearchTool } from "./tools/search.js";
+import { registerCreateCrTool } from "./tools/create-cr.js";
+import { registerUpdateTaskStatusTool } from "./tools/update-task-status.js";
+import { registerAddChecklistItemsTool } from "./tools/add-checklist-items.js";
+import { registerRevertWriteTool } from "./tools/revert-write.js";
 
 // Validate required environment variables at startup
 if (!process.env["PM_TOKEN"]) {
@@ -25,7 +29,7 @@ process.stderr.write(`[trlabs-pm-mcp] connecting to ${baseUrl}\n`);
 
 const server = new McpServer({
   name: "trlabs-pm-mcp",
-  version: "0.1.0",
+  version: "0.3.0",
 });
 
 registerReadCrTool(server);
@@ -36,6 +40,11 @@ registerListCategoriesTool(server);
 registerReadCommentsTool(server);
 registerWhoamiTool(server);
 registerSearchTool(server);
+// Write tools (require a readwrite-scoped token; gated 403 for read tokens).
+registerCreateCrTool(server);
+registerUpdateTaskStatusTool(server);
+registerAddChecklistItemsTool(server);
+registerRevertWriteTool(server);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);

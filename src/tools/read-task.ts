@@ -12,9 +12,10 @@ export function registerReadTaskTool(server: McpServer): void {
     "read_task",
     {
       description:
-        "Read a single task from the TRLabs PM system by taskId, including its " +
-        "description, checklist, comments, and source CR (if it was converted " +
-        "from one). Task status is one of todo|doing|done. " +
+        "Read a single task from the TRLabs PM system by taskId — full working context: " +
+        "its description, checklist, comments, and (when the task was converted from a CR) the " +
+        "complete source CR including the client's request, expectation, status, and CR comments. " +
+        "Task status is one of todo|doing|done. " +
         "Requires the PM_TOKEN environment variable (a Bearer token from /settings/api-tokens).",
       inputSchema,
     },
