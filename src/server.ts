@@ -12,6 +12,7 @@ import { registerSearchTool } from "./tools/search.js";
 import { registerCreateCrTool } from "./tools/create-cr.js";
 import { registerUpdateTaskStatusTool } from "./tools/update-task-status.js";
 import { registerAddChecklistItemsTool } from "./tools/add-checklist-items.js";
+import { registerSetChecklistItemTool } from "./tools/set-checklist-item.js";
 import { registerRevertWriteTool } from "./tools/revert-write.js";
 
 // Validate required environment variables at startup
@@ -29,7 +30,7 @@ process.stderr.write(`[trlabs-pm-mcp] connecting to ${baseUrl}\n`);
 
 const server = new McpServer({
   name: "trlabs-pm-mcp",
-  version: "0.3.0",
+  version: "0.4.0",
 });
 
 registerReadCrTool(server);
@@ -44,6 +45,7 @@ registerSearchTool(server);
 registerCreateCrTool(server);
 registerUpdateTaskStatusTool(server);
 registerAddChecklistItemsTool(server);
+registerSetChecklistItemTool(server);
 registerRevertWriteTool(server);
 
 const transport = new StdioServerTransport();
